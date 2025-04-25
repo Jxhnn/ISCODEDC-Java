@@ -2,6 +2,7 @@ package com.gamesUP.gamesUP.controllers;
 
 import com.gamesUP.gamesUP.model.Game;
 import com.gamesUP.gamesUP.services.GameService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,27 +18,30 @@ public class GameController {
     }
 
     @GetMapping
-    public List<Game> getAllGames() {
-        return gameService.getAllGames();
+    public List<Game> getAll() {
+        return gameService.getAll();
     }
 
     @GetMapping("/{id}")
-    public Game getGameById(@PathVariable Integer id) {
-        return gameService.getGameById(id);
+    public Game getById(@PathVariable Integer id) {
+        return gameService.getById(id);
     }
 
     @PostMapping
-    public Game createGame(@RequestBody Game game) {
-        return gameService.saveGame(game);
+    @PreAuthorize("hasRole('ADMIN')")
+    public Game create(@RequestBody Game game) {
+        return gameService.save(game);
     }
 
     @PutMapping("/{id}")
-    public Game updateGame(@PathVariable Integer id, @RequestBody Game game) {
-        return gameService.updateGame(id, game);
+    @PreAuthorize("hasRole('ADMIN')")
+    public Game update(@PathVariable Integer id, @RequestBody Game game) {
+        return gameService.update(id, game);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteGame(@PathVariable Integer id) {
-        gameService.deleteGame(id);
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(@PathVariable Integer id) {
+        gameService.delete(id);
     }
 }

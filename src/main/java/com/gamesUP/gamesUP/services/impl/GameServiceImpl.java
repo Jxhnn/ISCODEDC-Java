@@ -16,36 +16,26 @@ public class GameServiceImpl implements GameService {
         this.gameRepository = gameRepository;
     }
 
-    @Override
-    public List<Game> getAllGames() {
+    public List<Game> getAll() {
         return (List<Game>) gameRepository.findAll();
     }
 
-    @Override
-    public Game getGameById(Integer id) {
-        return gameRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Game not found"));
+    public Game getById(Integer id) {
+        return gameRepository.findById(id).orElseThrow();
     }
 
-    @Override
-    public Game saveGame(Game game) {
+    public Game save(Game game) {
         return gameRepository.save(game);
     }
 
-    @Override
-    public Game updateGame(Integer id, Game game) {
-        Game existing = getGameById(id);
-        existing.setTitle(game.getTitle());
-        existing.setPrice(game.getPrice());
-        existing.setReleaseDate(game.getReleaseDate());
-        existing.setPublisher(game.getPublisher());
-        existing.setAuthor(game.getAuthor());
-        existing.setCategories(game.getCategories());
+    public Game update(Integer id, Game game) {
+        Game existing = getById(id);
+
         return gameRepository.save(existing);
     }
 
-    @Override
-    public void deleteGame(Integer id) {
+    public void delete(Integer id) {
         gameRepository.deleteById(id);
     }
 }
+

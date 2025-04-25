@@ -2,6 +2,7 @@ package com.gamesUP.gamesUP.controllers;
 
 import com.gamesUP.gamesUP.model.Review;
 import com.gamesUP.gamesUP.services.ReviewService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,11 +32,14 @@ public class ReviewController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public Review update(@PathVariable Integer id, @RequestBody Review review) {
         return reviewService.update(id, review);
     }
 
-    @DeleteMapping("/{id}") public void delete(@PathVariable Integer id) {
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public void delete(@PathVariable Integer id) {
         reviewService.delete(id);
     }
 }
