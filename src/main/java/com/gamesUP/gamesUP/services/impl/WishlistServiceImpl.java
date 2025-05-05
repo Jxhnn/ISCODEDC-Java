@@ -20,6 +20,10 @@ public class WishlistServiceImpl implements WishlistService {
         return wishlistRepository.findById(id).orElseThrow();
     }
 
+    public List<Wishlist> getByUserId(Integer id) {
+        return wishlistRepository.findAllByUserId(id);
+    }
+
     public Wishlist save(Wishlist user) {
         return wishlistRepository.save(user);
     }

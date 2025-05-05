@@ -2,6 +2,7 @@ package com.gamesUP.gamesUP.controllers;
 
 import com.gamesUP.gamesUP.model.Review;
 import com.gamesUP.gamesUP.services.ReviewService;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class ReviewController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PostAuthorize("hasRole('ADMIN') or (returnObject != null and returnObject.user != null and returnObject.user.id == authentication.principal.id)")
     public Review update(@PathVariable Integer id, @RequestBody Review review) {
         return reviewService.update(id, review);
     }

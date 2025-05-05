@@ -24,6 +24,10 @@ public class PurchaseServiceImpl implements PurchaseService {
         return purchaseRepository.findById(id).orElseThrow();
     }
 
+    public List<Purchase> getByUserId(Integer userId) {
+        return purchaseRepository.findAllByUserId(userId);
+    }
+
     public Purchase save(Purchase purchase) {
         return purchaseRepository.save(purchase);
     }

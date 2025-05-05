@@ -7,7 +7,7 @@ import com.gamesUP.gamesUP.dto.LoginRequest;
 import com.gamesUP.gamesUP.dto.RegisterRequest;
 import com.gamesUP.gamesUP.enums.Role;
 import com.gamesUP.gamesUP.model.User;
-import com.gamesUP.gamesUP.repositories.UserRepository; // Needed by SecurityConfig
+import com.gamesUP.gamesUP.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-// Import static helpers
 import java.util.Optional;
 
 import static org.mockito.Mockito.when;
@@ -85,7 +84,7 @@ class AuthControllerTest {
     @Test
     void shouldNotRegisterExistingUser() throws Exception {
         User duplicateUserInput = new User();
-        duplicateUserInput.setUsername(existingUser.getUsername()); // Existing username
+        duplicateUserInput.setUsername(existingUser.getUsername());
         duplicateUserInput.setPassword("some_password");
         duplicateUserInput.setEmail("duplicate@example.com");
         String requestJson = objectMapper.writeValueAsString(duplicateUserInput);
@@ -97,7 +96,7 @@ class AuthControllerTest {
                         .with(csrf())
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
-                .andExpect(status().isConflict()) // Expect 409 Conflict
+                .andExpect(status().isConflict())
                 .andExpect(content().string("Username already exists"));
     }
 
@@ -108,11 +107,11 @@ class AuthControllerTest {
         when(userRepository.findByUsername(username)).thenReturn(Optional.of(existingUser));
         when(passwordEncoder.matches(rawPassword, existingUser.getPassword())).thenReturn(true);
 
-        // Préparer la requête de login (suppose un objet LoginRequest similaire au RegisterRequest)
+        // Préparer la requête de login
         LoginRequest loginRequest = new LoginRequest(username, rawPassword);
         String loginJson = objectMapper.writeValueAsString(loginRequest);
 
-        // Simuler un AuthenticationManager qui authentifie correctement (selon votre logique)
+        // Simuler un AuthenticationManager qui authentifie correctement
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(username, rawPassword);
 

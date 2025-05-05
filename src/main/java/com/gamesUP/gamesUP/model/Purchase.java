@@ -1,5 +1,6 @@
 package com.gamesUP.gamesUP.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -29,5 +30,6 @@ public class Purchase {
 	private User user;
 
 	@OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL)
+	@JsonManagedReference
 	private List<PurchaseItem> purchaseLines;
 }

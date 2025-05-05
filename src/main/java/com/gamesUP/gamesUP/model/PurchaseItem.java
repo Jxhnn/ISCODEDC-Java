@@ -1,5 +1,6 @@
 package com.gamesUP.gamesUP.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,6 +16,7 @@ public class PurchaseItem {
 
     @ManyToOne
     @JoinColumn(name = "purchase_id")
+    @JsonBackReference
     private Purchase purchase;
 
     @ManyToOne

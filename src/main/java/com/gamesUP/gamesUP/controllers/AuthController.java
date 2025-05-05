@@ -43,7 +43,7 @@ public class AuthController {
         }
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setRole(Role.CLIENT); // Par défaut, un nouveau compte est client
+        user.setRole(Role.CLIENT);
         userRepository.save(user);
         return ResponseEntity.ok("User registered successfully");
     }
